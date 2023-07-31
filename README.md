@@ -2,16 +2,6 @@
 
 Programa para funcionamento de um jogo da velha!
 
-Corpo base do jogo:
-
-- +---+---+---+
-- | 0 | 1 | 2 |
-- +---+---+---+
-- | 3 | 4 | 5 |
-- +---+---+---+
-- | 6 | 7 | 8 |
-- +---+---+---+
-
 Funcionamento: 
 
 - Digite um dos números dentro da tabela para selecionar, a depender da vez de jogada, o 'X' ou o 'O'.
@@ -24,4 +14,4 @@ Funcionamento:
 
 -Em caso de EMPATE: aparecerá na tela a mensagem "Empate!".
 
-(Apresenta alguns erros mas não impede o funcionamento do programa!!)
+(O programa, por enquanto, apresenta alguns erros mas não impede o funcionamento do mesmo!!)

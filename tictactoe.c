@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 //função para inserir a posição.
 void jogo(int *pos){
@@ -284,18 +284,26 @@ void base(int *pos, int comp){
 
 int main(){
     
-    int comp, pos[8];
+    int comp = 0, pos[8];
+    char resp;
+
+    do{
+        printf("===========| Jogo da Velha |===========\n");
+        printf("Digite o número relativo a posição em que deseja jogar!\n");
+        
+        jogo(pos);
+
     
-    printf("===========| Jogo da Velha |===========\n");
-    printf("Digite o número relativo a posição em que deseja jogar!\n");
+        base(pos, comp);
+
+        printf("Jogar Novamente? [s/n]:\n");
+        scanf(" %c", &resp);
+
+        system("cls");
+    }while(resp == 's');
+   
     
-    jogo(pos);
-    
-    base(pos, comp);
-    
-    //for(int x = 0; x < 9; x++){
-    //    printf("%d ", pos[x]);
-    //}
+   
 
     return 0;
 }

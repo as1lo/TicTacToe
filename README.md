@@ -14,4 +14,4 @@ Funcionamento:
 
 -Em caso de EMPATE: aparecerá na tela a mensagem "Empate!".
 
-(O programa, por enquanto, apresenta alguns erros mas não impede o funcionamento do mesmo!!)
+(O programa, por enquanto, apresenta um bug quase imperceptível mas que não impede o funcionamento do mesmo!!)

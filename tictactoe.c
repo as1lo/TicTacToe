@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 //função para inserir a posição.
 void jogo(int *pos){
@@ -37,18 +36,26 @@ void base(int *pos, int comp){
         
         do{
             ver = 0;
-            //troca da vez de jogada
-            if(cont % 2 != 0){
-                printf("Vez de 'X': ");
-                scanf("%d", &comp);
-                printf("\n");
-    
-            }else{
-                printf("Vez de 'O': ");
-                scanf("%d", &comp);
-                printf("\n");
+            
+            //verificação de número inválido fora do conjunto de números de posição.
+            do{
+                //troca da vez de jogada.
+                if(cont % 2 != 0){
+                    printf("Vez de 'X': ");
+                    scanf("%d", &comp);
+                    printf("\n");
+        
+                }else{
+                    printf("Vez de 'O': ");
+                    scanf("%d", &comp);
+                    printf("\n");
 
-            }
+                }
+
+                if(comp < 0 || comp > 9){
+                    printf("Digite um número válido!\n");
+                }
+            }while(comp < 0 || comp > 9);
 
             //verificador de erro de escolha de posição.
             for(int i = 0; i < 9; i++){
@@ -284,7 +291,7 @@ void base(int *pos, int comp){
 
 int main(){
     
-    int comp = 0, pos[8];
+    int comp = 0, pos[9];
     char resp;
 
     do{
@@ -293,7 +300,6 @@ int main(){
         
         jogo(pos);
 
-    
         base(pos, comp);
 
         printf("Jogar Novamente? [s/n]:\n");
@@ -302,8 +308,5 @@ int main(){
         system("cls");
     }while(resp == 's');
    
-    
-   
-
     return 0;
 }

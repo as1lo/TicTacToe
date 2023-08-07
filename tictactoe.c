@@ -1,6 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//verificação da matriz das posições do tabuleiro.
+//função para iniciar o processo de verificação de vitória.
+//utilizará os números referentes a 'X' e 'O' na tabela ASCII para inserir na matriz 
+//caso a posição do tabuleiro seja igual a selecionada pelo jogador.
+void tabuleiroverify(int comp, int jog, int tabuleiro[3][3]){
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            if(tabuleiro[i][j] == comp){
+                if(jog % 2 != 0){
+                    tabuleiro[i][j] = 88;
+                }else{
+                    tabuleiro[i][j] = 79;
+                }
+            }
+            
+        }
+    }
+}
+
+//verificação de vitória
+int verificarVencedor(int tabuleiro[3][3]){
+
+    // Verificar linhas
+    for (int i = 0; i < 3; i++) {
+        if (tabuleiro[i][0] == tabuleiro[i][1] && tabuleiro[i][1] == tabuleiro[i][2]) {
+            if (tabuleiro[i][0] == 88){
+                
+                return 1;
+            }else if (tabuleiro[i][0] == 79){
+
+                return 2;
+            }
+        }
+    }
+
+    // Verificar colunas
+    for(int i = 0; i < 3; i++) {
+        if (tabuleiro[0][i] == tabuleiro[1][i] && tabuleiro[1][i] == tabuleiro[2][i]) {
+            if (tabuleiro[0][i] == 88){
+                return 1;
+            }
+            else if (tabuleiro[0][i] == 79){
+
+                return 2;
+            }
+        }
+    }
+
+    // Verificar diagonais
+    if((tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][2]) ||
+        (tabuleiro[0][2] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][0])) {
+        if (tabuleiro[1][1] == 88){
+
+            return 1;
+        }
+        else if (tabuleiro[1][1] == 79){
+            
+            return 2;
+        }
+    }
+    
+    //se o jogo não acabou.
+    return 0;
+}
+
 //função para inserir a posição.
 void jogo(int *pos){
     int x = 0;
@@ -20,11 +85,8 @@ void jogo(int *pos){
 }
 
 //função de inicialização do jogo
-void base(int *pos, int comp){
-
-    int x, cont = 1, giro = 1, verify[8], ver = 0, hori1x = 0, hori2x= 0, hori3x= 0, ver1x= 0, ver2x= 0, ver3x= 0, diag1x= 0, diag2x = 0;
-
-    int hori1 = 0, hori2 = 0, hori3 = 0, ver1 = 0, ver2 = 0, ver3 = 0, diag1 = 0, diag2 = 0;
+void base(int *pos, int comp, int tabuleiro[3][3]){
+    int x, cont = 1, giro = 1, verify[8], ver = 0;
 
     for(int i = 0; i < 9; i++){
         verify[i] = 10;
@@ -44,12 +106,15 @@ void base(int *pos, int comp){
                     printf("Vez de 'X': ");
                     scanf("%d", &comp);
                     printf("\n");
-        
+
+                    tabuleiroverify(comp, cont, tabuleiro);
+
                 }else{
                     printf("Vez de 'O': ");
                     scanf("%d", &comp);
                     printf("\n");
 
+                    tabuleiroverify(comp, cont, tabuleiro);
                 }
 
                 if(comp < 0 || comp > 9){
@@ -68,7 +133,8 @@ void base(int *pos, int comp){
                 }
             }
             
-        }while(ver != 1);
+        }while(!ver);
+
         system("cls");
         
         printf("+---+---+---+\n");
@@ -77,7 +143,6 @@ void base(int *pos, int comp){
             for(int j = 1; j <= 3; j++){
 
                 //verificação da posição
-
                 if(pos[x] == comp){
 
                     //verificação da vez da jogada
@@ -116,170 +181,14 @@ void base(int *pos, int comp){
             printf("|\n+---+---+---+\n");
         }
         giro++;
-
-        if(cont % 2 == 0){
-            //verificação horizontal1x
-            if(comp == 0 || comp == 1 || comp == 2){
-                hori1x++;
-            }
-            
-            if(hori1x >= 3){
-                printf("Vitória de 'X'!\n");
-                break;
-            }
-
-            //verificação horizontal2x
-            if(comp == 3 || comp == 4 || comp == 5){
-                hori2x++;
-            }
-            
-            if(hori2x >= 3){
-                printf("Vitória de 'X'!\n");
-                break;
-            }
-
-            //verificação horizontal3x
-            if(comp == 6 || comp == 7 || comp == 8){
-                hori3x++;
-            }
-            
-            if(hori3x >= 3){
-                printf("Vitória de 'X'!\n");
-                break;
-            }
-
-            //
-            //verificação vertical1x
-            if(comp == 0 || comp == 3 || comp == 6){
-                ver1x++;
-            }
-            
-            if(ver1x >= 3){
-                printf("Vitória de 'X'!\n");
-                break;
-            }
-
-            //verificação vertical2x
-            if(comp == 1 || comp == 4 || comp == 7){
-                ver2x++;
-            }
-            
-            if(ver2x >= 3){
-                printf("Vitória de 'X'!\n");
-                break;
-            }
-
-            //verificação vertical3x
-            if(comp == 2 || comp == 5 || comp == 8){
-                ver3x++;
-            }
-            
-            if(ver3x >= 3){
-                printf("Vitória de 'X'!\n");
-                break;
-            }
-
-            //
-            //verificação diagonal1x
-            if(comp == 0 || comp == 4 || comp == 8){
-                diag1x++;
-            }
-            
-            if(diag1x >= 3){
-                printf("Vitória de 'X'!\n");
-                break;
-            }
-
-            //verificação diagonal2x
-            if(comp == 2 || comp == 4 || comp == 6){
-                diag2x++;
-            }
-            
-            if(diag2x >= 3){
-                printf("Vitória de 'X'!\n");
-                break;
-            }
-        }else{
-            //verificação horizontal1
-            if(comp == 0 || comp == 1 || comp == 2){
-                hori1++;
-            }
-            
-            if(hori1 >= 3){
-                printf("Vitória de 'O'!\n");
-                break;
-            }
-
-            //verificação horizontal2
-            if(comp == 3 || comp == 4 || comp == 5){
-                hori2++;
-            }
-            
-            if(hori2 >= 3){
-                printf("Vitória de 'O'!\n");
-                break;
-            }
-
-            //verificação horizontal3
-            if(comp == 6 || comp == 7 || comp == 8){
-                hori3++;
-            }
-            
-            if(hori3 >= 3){
-                printf("Vitória de 'O'!\n");
-                break;
-            }
-
-            //
-            //verificação vertical1
-            if(comp == 0 || comp == 3 || comp == 6){
-                ver1++;
-            }
-            
-            if(ver1 >= 3){
-                printf("Vitória de 'O'!\n");
-                break;
-            }
-
-            //verificação vertical2
-            if(comp == 1 || comp == 4 || comp == 7){
-                ver2++;
-            }
-            
-            if(ver2 >= 3){
-                printf("Vitória de 'O'!\n");
-                break;
-            }
-
-            //verificação vertical3
-            if(comp == 2 || comp == 5 || comp == 8){
-                ver3++;
-            }
-            
-            if(ver3 >= 3){
-                printf("Vitória de 'O'!\n");
-                break;
-            }
-
-            //verificação diagonal1
-            if(comp == 0 || comp == 4 || comp == 8){
-                diag1++;
-            }
-            
-            if(diag1 >= 3){
-                printf("Vitória de 'O'!\n");
-                break;
-            }
-
-            //verificação diagonal2
-            if(comp == 2 || comp == 4 || comp == 6){
-                diag2++;
-            }
-            
-            if(diag2 >= 3){
-                printf("Vitória de 'O'!\n");
-                break;
-            }
+        
+        //verificação de vitória.
+        if(verificarVencedor(tabuleiro) == 1){
+            printf("Vitória de 'X'!\n");
+            break;
+        }else if(verificarVencedor(tabuleiro) == 2){
+            printf("Vitória de 'O'!\n");
+            break;
         }
         
         //verificação de empate
@@ -290,17 +199,29 @@ void base(int *pos, int comp){
 }
 
 int main(){
-    
-    int comp = 0, pos[9];
+    int tabuleiro[3][3], comp = 0, pos[9], c;
     char resp;
 
     do{
+        //preparação para verificação de vitória!!!
+        //criando uma matriz para inserir as posições do tabuleiro
+        //e em seguida substituir a posição pelo número relacional à 'X' e 'O' na tabela ASCII
+        //dentro de uma função.
+        c = 0;
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                tabuleiro[i][j] = c;
+                c++;
+            }
+        }
+
+
         printf("===========| Jogo da Velha |===========\n");
         printf("Digite o número relativo a posição em que deseja jogar!\n");
         
         jogo(pos);
 
-        base(pos, comp);
+        base(pos, comp, tabuleiro);
 
         printf("Jogar Novamente? [s/n]:\n");
         scanf(" %c", &resp);
